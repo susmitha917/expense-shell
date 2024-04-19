@@ -8,6 +8,8 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
+echo "Please enter DB password:"
+read -s mysql_root_password
 
 VALIDATE(){
    if [ $1 -ne 0 ]
@@ -41,7 +43,7 @@ VALIDATE $? "Starting MySQL Server"
 # VALIDATE $? "Setting up root password"
 
 below code is useful to test idempotency nature
-mysql -h db.daws-78s.online -uroot -pExpenseApp@1 -e "SHOW DATABASES;" &>>LOGFILE
+mysql -h db.daws-78s.online -uroot -p${mysql_root_password} -e "SHOW DATABASES;" &>>LOGFILE
 if [ $? -ne 0]
 then
 mysql_secure_installation --set-root-pass ${mysql_root_password} &>>LOGFILE
